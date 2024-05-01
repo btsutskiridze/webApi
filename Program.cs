@@ -1,4 +1,15 @@
+using System.Data;
+using System.Data.SqlClient;
+using WebAPi.Services;
+using WebAPi.Services.Contracts;
+
 var builder = WebApplication.CreateBuilder(args);
+
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddScoped<IDbConnection>(provider => new SqlConnection(connectionString));
+
+builder.Services.AddScoped<IUploadLeaderboardDataService, UploadLeaderboardDataService>();
 
 // Add services to the container.
 builder.Services.AddControllers();
